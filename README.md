@@ -1,35 +1,30 @@
-# Pushprom php client
+# Pushprom PHP client
 
-This is a php client for [Pushprom](https://github.com/messagebird/pushprom).
-If you use yii2 you may want to give a look at [the yii client](https://github.com/messagebird/pushprom-yii-client) repo.
-
-
-
+This is a PHP client for [Pushprom](https://github.com/messagebird/pushprom). If you use Yii 2 you may want to have a look at the [Yii 2 client](https://github.com/messagebird/pushprom-yii-client).
 
 # Installing
 
-Add this to your composer.json:
+You can install the Pushprom PHP client through Composer by running:
 
-```json
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/messagebird/pushprom-php-client"
-        }
-    ],
-    "require": {
-        "messagebird/pushprom-php-client": "dev-master"
-    }
-
+```bash
+composer require messagebird/pushprom-php-client:1.0.0
 ```
 
-and then install
+Alternatively, add this to your `composer.json`:
+
+```json
+"require": {
+    "messagebird/pushprom-php-client": "1.0.0"
+}
+```
+
+And then install by running:
 
 ```bash
 composer update messagebird/pushprom-php-client
 ```
 
-# Using it
+# Usage
 
 ```php
 $con = new \pushprom\Connection('udp://127.0.0.1:9090');
@@ -38,10 +33,4 @@ $gauge = new \pushprom\Gauge($con,
     "we eat fish and new fish is born",
     ["species" => "Thalassoma noronhanum"]);
 $gauge->set(2000);
-```
-
-# Tests
-
-```
-phpunit .
 ```
