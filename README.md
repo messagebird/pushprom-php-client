@@ -37,3 +37,7 @@ $gauge = new \pushprom\Gauge($con,
     ["species" => "Thalassoma noronhanum"]);
 $gauge->set(2000);
 ```
+
+## License
+
+The PHP client for Pushprom is licensed under [The BSD 2-Clause License](http://opensource.org/licenses/BSD-2-Clause). Copyright (c) 2016, MessageBird
