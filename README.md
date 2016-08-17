@@ -2,7 +2,10 @@
 
 This is a PHP client for [Pushprom](https://github.com/messagebird/pushprom). If you use Yii 2 you may want to have a look at the [Yii 2 client](https://github.com/messagebird/pushprom-yii-client).
 
-# Installing
+[![Latest Stable Version](https://poser.pugx.org/messagebird/pushprom-php-client/v/stable.svg)](https://packagist.org/packages/messagebird/pushprom-php-client)
+[![License](https://poser.pugx.org/messagebird/pushprom-php-client/license.svg)](https://packagist.org/packages/messagebird/pushprom-php-client)
+
+## Installing
 
 You can install the Pushprom PHP client through Composer by running:
 
@@ -24,7 +27,7 @@ And then install by running:
 composer update messagebird/pushprom-php-client
 ```
 
-# Usage
+## Usage
 
 ```php
 $con = new \pushprom\Connection('udp://127.0.0.1:9090');
