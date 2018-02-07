@@ -1,6 +1,6 @@
 # Pushprom PHP client
 
-This is a PHP client for [Pushprom](https://github.com/messagebird/pushprom). If you use Yii 2 you may want to have a look at the [Yii 2 client](https://github.com/messagebird/pushprom-yii-client).
+This is a PHP client for [Pushprom](https://github.com/messagebird/pushprom). If you use Yii 2 you may want to have a look at the [Yii 2 client](https://github.com/messagebird/pushprom-yii2-client).
 
 [![Latest Stable Version](https://poser.pugx.org/messagebird/pushprom-php-client/v/stable.svg)](https://packagist.org/packages/messagebird/pushprom-php-client)
 [![License](https://poser.pugx.org/messagebird/pushprom-php-client/license.svg)](https://packagist.org/packages/messagebird/pushprom-php-client)
