@@ -4,12 +4,13 @@ namespace pushprom;
 
 class Histogram extends Metric
 {
-    function observe($value)
+    function observe($value, $buckets = [])
     {
         return $this->pushDelta(
             [
-                "value"  => $value,
-                "method" => "observe",
+                'value' => $value,
+                'method' => 'observe',
+                'buckets' => $buckets,
             ]
         );
     }
