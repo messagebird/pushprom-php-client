@@ -71,8 +71,10 @@ class Connection
             @fclose($sock);
 
         } else {
-            $url = $this->protocol . '://' .(($this->username && $this->password) ? $this->username.":".$this->password."@" : null) . $this->host . ':' . $this->port . "/";
-            $ch = curl_init($url);
+            $ch = curl_init($this->protocol . '://' . $this->host . ':' . $this->port . "/");
+            if($this->username && $this->password){
+              curl_setopt($ch, CURLOPT_USERPWD, $this->username . ":" . $this->password);
+            }
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
             curl_setopt($ch, CURLOPT_POSTFIELDS, $msg);
             if ($this->protocol == "https") {
