@@ -7,6 +7,8 @@ class Connection
     private $protocol;
     private $host;
     private $port;
+    private $username;
+    private $password;
     private $constLabels;
     private $warningLogger;
 
@@ -18,6 +20,8 @@ class Connection
         $this->protocol      = strtolower(parse_url($url, PHP_URL_SCHEME));
         $this->host          = parse_url($url, PHP_URL_HOST);
         $this->port          = parse_url($url, PHP_URL_PORT);
+        $this->username      = parse_url($url, PHP_URL_USER);
+        $this->password      = parse_url($url, PHP_URL_PASS);
 
         $supportedProtocols = ["http", "https", "udp"];
         if (in_array($this->protocol, $supportedProtocols) == false) {
@@ -67,7 +71,8 @@ class Connection
             @fclose($sock);
 
         } else {
-            $ch = curl_init($this->protocol . '://' . $this->host . ':' . $this->port . "/");
+            $url = $this->protocol . '://' .(($this->username && $this->password) ? $this->username.":".$this->password."@" : null) . $this->host . ':' . $this->port . "/";
+            $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
             curl_setopt($ch, CURLOPT_POSTFIELDS, $msg);
             if ($this->protocol == "https") {
