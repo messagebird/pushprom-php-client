@@ -4,7 +4,7 @@ namespace pushprom;
 
 class Gauge extends Metric
 {
-    function set($value)
+    public function set($value)
     {
         return $this->pushDelta(
             [
@@ -14,7 +14,7 @@ class Gauge extends Metric
         );
     }
 
-    function inc()
+    public function inc()
     {
         return $this->pushDelta(
             [
@@ -23,7 +23,7 @@ class Gauge extends Metric
         );
     }
 
-    function dec()
+    public function dec()
     {
         return $this->pushDelta(
             [
@@ -32,7 +32,7 @@ class Gauge extends Metric
         );
     }
 
-    function add($value)
+    public function add($value)
     {
         return $this->pushDelta(
             [
@@ -42,7 +42,7 @@ class Gauge extends Metric
         );
     }
 
-    function sub($value)
+    public function sub($value)
     {
         return $this->pushDelta(
             [

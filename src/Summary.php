@@ -4,7 +4,7 @@ namespace pushprom;
 
 class Summary extends Metric
 {
-    function observe($value)
+    public function observe($value)
     {
         return $this->pushDelta(
             [

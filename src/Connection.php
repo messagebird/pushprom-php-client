@@ -29,15 +29,8 @@ class Connection
             );
         }
     }
-    private function warning($msg) {
-        if ($this->warningLogger != null) {
-            call_user_func_array($this->warningLogger, [$msg]);
-        } else {
-            error_log($msg);
-        }
-    }
 
-    function push($delta)
+    public function push(array $delta)
     {
         $delta["labels"] = array_merge($delta["labels"], $this->constLabels);
 
@@ -89,4 +82,12 @@ class Connection
         return $response;
     }
 
+    private function warning(string $msg)
+    {
+        if ($this->warningLogger != null) {
+            call_user_func_array($this->warningLogger, [$msg]);
+        } else {
+            error_log($msg);
+        }
+    }
 }

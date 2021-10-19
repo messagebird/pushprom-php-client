@@ -10,7 +10,7 @@ class Metric
     protected $labels;
     protected $useUDP;
 
-    function __construct($connection, $name, $help, $labels = [])
+    public function __construct($connection, $name, $help, $labels = [])
     {
         $this->connection = $connection;
         $this->name       = $name;
@@ -33,7 +33,7 @@ class Metric
         }
     }
 
-    function pushDelta($attrs = [])
+    public function pushDelta(array $attrs = [])
     {
         // create new delta based on this metric
         $typeParts = explode('\\', strtolower(get_class($this)));

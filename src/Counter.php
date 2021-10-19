@@ -4,7 +4,7 @@ namespace pushprom;
 
 class Counter extends Metric
 {
-    function set($value)
+    public function set($value)
     {
         return $this->pushDelta(
             [
@@ -14,7 +14,7 @@ class Counter extends Metric
         );
     }
 
-    function inc()
+    public function inc()
     {
         return $this->pushDelta(
             [
@@ -23,7 +23,7 @@ class Counter extends Metric
         );
     }
 
-    function add($value)
+    public function add($value)
     {
         return $this->pushDelta(
             [

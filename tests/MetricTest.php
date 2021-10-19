@@ -9,7 +9,7 @@ require __DIR__ . DIRECTORY_SEPARATOR . 'Summary.php';
 
 class ConnectionStub extends stdClass
 {
-    function push($delta)
+    public function push($delta)
     {
         $this->recordedDelta = $delta;
     }
@@ -69,5 +69,3 @@ class MetricTest extends \PHPUnit_Framework_TestCase
         }
     }
 }
-
-?>
