@@ -19,5 +19,13 @@
         "psr-4": {
             "pushprom\\": "src/"
         }
+    },
+    "require": {
+        "ext-curl": "*",
+        "ext-json": "*",
+        "php": "^7.3|^8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
     }
 }

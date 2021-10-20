@@ -1,11 +1,6 @@
 <?php
 
-require __DIR__ . DIRECTORY_SEPARATOR . 'Connection.php';
-require __DIR__ . DIRECTORY_SEPARATOR . 'Metric.php';
-require __DIR__ . DIRECTORY_SEPARATOR . 'Gauge.php';
-require __DIR__ . DIRECTORY_SEPARATOR . 'Counter.php';
-require __DIR__ . DIRECTORY_SEPARATOR . 'Histogram.php';
-require __DIR__ . DIRECTORY_SEPARATOR . 'Summary.php';
+use PHPUnit\Framework\TestCase;
 
 class ConnectionStub extends stdClass
 {
@@ -16,7 +11,7 @@ class ConnectionStub extends stdClass
 }
 
 
-class MetricTest extends \PHPUnit_Framework_TestCase
+class MetricTest extends TestCase
 {
     public function testProxy()
     {
