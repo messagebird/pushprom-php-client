@@ -1,0 +1,35 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: php-actions/composer@v5
+      - uses: php-actions/phpunit@v3
+      - name: phpunit-latest
+        with:
+          php_version: 8.0
+      - name: phpunit-lowest
+        with:
+          php_version: 7.3
+
+  phpstan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: php-actions/composer@v5
+      - uses: php-actions/phpstan@v3
+      - name: phpstan
+        with:
+          php_version: 8.0
+
+  psalm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: docker://vimeo/psalm-github-actions
+      - name: phpstan
+        uses: php-actions/phpstan@v3
+        with:
+          php_version: 8.0
