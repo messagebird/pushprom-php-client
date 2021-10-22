@@ -9,10 +9,12 @@ jobs:
       - name: phpunit-latest
         uses: php-actions/phpunit@v3
         with:
+          configuration: phpunit.xml.dist
           php_version: 8.0
       - name: phpunit-lowest
         uses: php-actions/phpunit@v3
         with:
+          configuration: phpunit.xml.dist
           php_version: 7.3
 
   phpstan:
@@ -33,4 +35,5 @@ jobs:
       - name: phpstan
         uses: docker://vimeo/psalm-github-actions
         with:
+          composer_require_dev: true
           php_version: 8.0
