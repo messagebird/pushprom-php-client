@@ -4,6 +4,10 @@ namespace pushprom;
 
 class Counter extends Metric
 {
+    /**
+     * @param mixed $value
+     * @return bool|string|null
+     */
     public function set($value)
     {
         return $this->pushDelta(
@@ -14,6 +18,7 @@ class Counter extends Metric
         );
     }
 
+    /** @return bool|string|null */
     public function inc()
     {
         return $this->pushDelta(
@@ -23,6 +28,10 @@ class Counter extends Metric
         );
     }
 
+    /**
+     * @param mixed $value
+     * @return bool|string|null
+     */
     public function add($value)
     {
         return $this->pushDelta(

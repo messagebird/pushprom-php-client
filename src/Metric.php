@@ -4,13 +4,29 @@ namespace pushprom;
 
 class Metric
 {
+    /** @var mixed */
     protected $connection;
+
+    /** @var mixed */
     protected $name;
+
+    /** @var mixed */
     protected $help;
+
+    /** @var array */
     protected $labels;
+
+    /** @var bool */
     protected $useUDP;
 
-    public function __construct($connection, $name, $help, $labels = [])
+    /**
+     * @param mixed $connection
+     * @param mixed $name
+     * @param mixed $help
+     * @param array $labels
+     * @throws \Exception
+     */
+    public function __construct($connection, $name, $help, array $labels = [])
     {
         $this->connection = $connection;
         $this->name       = $name;
@@ -33,6 +49,7 @@ class Metric
         }
     }
 
+    /** @return bool|string|null */
     public function pushDelta(array $attrs = [])
     {
         // create new delta based on this metric

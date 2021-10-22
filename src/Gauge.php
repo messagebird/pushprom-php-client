@@ -4,6 +4,10 @@ namespace pushprom;
 
 class Gauge extends Metric
 {
+    /**
+     * @param mixed $value
+     * @return bool|string|null
+     */
     public function set($value)
     {
         return $this->pushDelta(
@@ -14,6 +18,7 @@ class Gauge extends Metric
         );
     }
 
+    /** @return bool|string|null */
     public function inc()
     {
         return $this->pushDelta(
@@ -23,6 +28,7 @@ class Gauge extends Metric
         );
     }
 
+    /** @return bool|string|null */
     public function dec()
     {
         return $this->pushDelta(
@@ -32,6 +38,10 @@ class Gauge extends Metric
         );
     }
 
+    /**
+     * @param mixed $value
+     * @return bool|string|null
+     */
     public function add($value)
     {
         return $this->pushDelta(
@@ -42,6 +52,10 @@ class Gauge extends Metric
         );
     }
 
+    /**
+     * @param mixed $value
+     * @return bool|string|null
+     */
     public function sub($value)
     {
         return $this->pushDelta(

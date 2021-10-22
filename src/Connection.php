@@ -4,18 +4,30 @@ namespace pushprom;
 
 class Connection
 {
+    /** @var string */
+    private $url;
+
+    /** @var string */
     private $protocol;
+
+    /** @var string|false|null */
     private $host;
+
+    /** @var int|false|null */
     private $port;
+
+    /** @var array */
     private $constLabels;
+
+    /** @var callable|null */
     private $warningLogger;
 
-    public function __construct($url, $constLabels = [], $warningLogger = null)
+    public function __construct(string $url, array $constLabels = [], callable $warningLogger = null)
     {
         $this->url           = $url;
         $this->constLabels   = $constLabels;
         $this->warningLogger = $warningLogger;
-        $this->protocol      = strtolower(parse_url($url, PHP_URL_SCHEME));
+        $this->protocol      = strtolower((string) parse_url($url, PHP_URL_SCHEME));
         $this->host          = parse_url($url, PHP_URL_HOST);
         $this->port          = parse_url($url, PHP_URL_PORT);
 
@@ -30,6 +42,7 @@ class Connection
         }
     }
 
+    /** @return bool|string|null */
     public function push(array $delta)
     {
         $delta["labels"] = array_merge($delta["labels"], $this->constLabels);
@@ -39,7 +52,11 @@ class Connection
             $delta["labels"] = new \stdClass();
         }
 
-        $msg     = json_encode($delta);
+        $msg = json_encode($delta);
+        if ($msg === false) {
+            $this->warning(sprintf("Failed to encode to json %s", var_export($delta)));
+            $msg = (string) $msg;
+        }
         $msg_len = strlen($msg);
 
         $response = null;
@@ -50,7 +67,11 @@ class Connection
                 $this->warning("Pushprom payload too big($msg_len). It needs to be smaller than $maxMsgLen.");
             }
 
-            $sock = fsockopen("udp://" . $this->host, $this->port, $errno, $errstr);
+            $sock = fsockopen("udp://" . (string) $this->host, (int) $this->port, $errno, $errstr);
+            if ($sock === false) {
+                $this->warning("Failed to open UDP socket connection");
+                return $response;
+            }
 
             $r = @fwrite($sock, $msg);
             if ($r == FALSE) {
@@ -61,6 +82,11 @@ class Connection
 
         } else {
             $ch = curl_init($this->protocol . '://' . $this->host . ':' . $this->port . "/");
+            if ($ch === false) {
+                $this->warning("Failed to initialize cURL session");
+                return $response;
+            }
+
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
             curl_setopt($ch, CURLOPT_POSTFIELDS, $msg);
             if ($this->protocol == "https") {
@@ -82,7 +108,7 @@ class Connection
         return $response;
     }
 
-    private function warning(string $msg)
+    private function warning(string $msg): void
     {
         if ($this->warningLogger != null) {
             call_user_func_array($this->warningLogger, [$msg]);

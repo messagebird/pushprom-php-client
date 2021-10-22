@@ -4,7 +4,8 @@ use PHPUnit\Framework\TestCase;
 
 class ConnectionStub extends stdClass
 {
-    public function push($delta)
+    /** @param mixed $delta */
+    public function push($delta): void
     {
         $this->recordedDelta = $delta;
     }
@@ -13,7 +14,7 @@ class ConnectionStub extends stdClass
 
 class MetricTest extends TestCase
 {
-    public function testProxy()
+    public function testProxy(): void
     {
         $stub = new ConnectionStub();
 
@@ -33,6 +34,7 @@ class MetricTest extends TestCase
             $labels = ["key_$i" => "value_$i"];
 
             $klass     = ucfirst($type);
+            /** @var class-string $fullKlass */
             $fullKlass = "pushprom\\$klass";
             $rc        = new ReflectionClass($fullKlass);
             $mo        = $rc->newInstanceArgs([$stub, "name_$i", "help_$i", ["key_$i" => "value_$i"]]);

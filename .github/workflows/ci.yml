@@ -22,6 +22,7 @@ jobs:
       - uses: php-actions/phpstan@v3
       - name: phpstan
         with:
+          configuration: phpstan.neon
           php_version: 8.0
 
   psalm:
