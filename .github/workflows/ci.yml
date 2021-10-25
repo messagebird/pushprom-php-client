@@ -3,19 +3,16 @@ on: [push]
 jobs:
   tests:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php_version: [7.3, 8.0]
     steps:
       - uses: actions/checkout@v2
       - uses: php-actions/composer@v5
-      - name: phpunit-latest
-        uses: php-actions/phpunit@v3
+      - uses: php-actions/phpunit@v3
         with:
           configuration: phpunit.xml.dist
-          php_version: 8.0
-      - name: phpunit-lowest
-        uses: php-actions/phpunit@v3
-        with:
-          configuration: phpunit.xml.dist
-          php_version: 7.3
+          php_version: ${{ matrix.php_version }}
 
   phpstan:
     runs-on: ubuntu-latest
