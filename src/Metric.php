@@ -70,9 +70,8 @@ class Metric
         }
 
         if (sizeof($delta["labels"]) > 0) {
-            // ensure all label values are "strings"
             foreach ($delta["labels"] as $k => $v) {
-                $delta["labels"][$k] = "" . $v;
+                $delta["labels"][$k] = (string) $v;
             }
         }
 

@@ -16,7 +16,7 @@ class Connection
     /** @var int|false|null */
     private $port;
 
-    /** @var array */
+    /** @var string[] */
     private $constLabels;
 
     /** @var callable|null */
@@ -24,6 +24,10 @@ class Connection
 
     public function __construct(string $url, array $constLabels = [], callable $warningLogger = null)
     {
+        foreach ($constLabels as $label => $value) {
+            $constLabels[$label] = (string) $value;
+        }
+
         $this->url           = $url;
         $this->constLabels   = $constLabels;
         $this->warningLogger = $warningLogger;
