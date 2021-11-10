@@ -2,15 +2,15 @@
 
 namespace pushprom;
 
-class Metric
+abstract class Metric
 {
-    /** @var mixed */
+    /** @var mixed|\pushprom\Connection */
     protected $connection;
 
-    /** @var mixed */
+    /** @var string */
     protected $name;
 
-    /** @var mixed */
+    /** @var string */
     protected $help;
 
     /** @var array */
@@ -20,13 +20,13 @@ class Metric
     protected $useUDP;
 
     /**
-     * @param mixed $connection
-     * @param mixed $name
-     * @param mixed $help
+     * @param mixed|\pushprom\Connection $connection
+     * @param string $name
+     * @param string $help
      * @param array $labels
      * @throws \Exception
      */
-    public function __construct($connection, $name, $help, array $labels = [])
+    public function __construct($connection, string $name, string $help, array $labels = [])
     {
         $this->connection = $connection;
         $this->name       = $name;

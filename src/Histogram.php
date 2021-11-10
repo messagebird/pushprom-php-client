@@ -6,10 +6,10 @@ class Histogram extends Metric
 {
     /**
      * @param mixed $value
-     * @param mixed $buckets
+     * @param array $buckets
      * @return bool|string|null
      */
-    public function observe($value, $buckets = [])
+    public function observe($value, array $buckets = [])
     {
         return $this->pushDelta(
             [

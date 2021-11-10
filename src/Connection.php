@@ -59,7 +59,7 @@ class Connection
         $msg = json_encode($delta);
         if ($msg === false) {
             $this->warning(sprintf("Failed to encode to json %s", var_export($delta)));
-            $msg = (string) $msg;
+            $msg = '';
         }
         $msg_len = strlen($msg);
 
