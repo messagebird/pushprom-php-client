@@ -5,9 +5,6 @@ namespace pushprom;
 class Connection
 {
     /** @var string */
-    private $url;
-
-    /** @var string */
     private $protocol;
 
     /** @var string|false|null */
@@ -28,7 +25,6 @@ class Connection
             $constLabels[$label] = (string) $value;
         }
 
-        $this->url           = $url;
         $this->constLabels   = $constLabels;
         $this->warningLogger = $warningLogger;
         $this->protocol      = strtolower((string) parse_url($url, PHP_URL_SCHEME));
