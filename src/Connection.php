@@ -13,10 +13,10 @@ class Connection
     /** @var int|false|null */
     private $port;
     
-    /** @var string|null */
+    /** @var string|false|null */
     private $username;
 
-    /** @var string|null */
+    /** @var string|false|null */
     private $password;
 
     /** @var string[] */
