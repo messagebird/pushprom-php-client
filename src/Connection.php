@@ -12,6 +12,12 @@ class Connection
 
     /** @var int|false|null */
     private $port;
+    
+    /** @var string|false|null */
+    private $username;
+
+    /** @var string|false|null */
+    private $password;
 
     /** @var string[] */
     private $constLabels;
@@ -30,6 +36,8 @@ class Connection
         $this->protocol      = strtolower((string) parse_url($url, PHP_URL_SCHEME));
         $this->host          = parse_url($url, PHP_URL_HOST);
         $this->port          = parse_url($url, PHP_URL_PORT);
+        $this->username      = parse_url($url, PHP_URL_USER);
+        $this->password      = parse_url($url, PHP_URL_PASS);
 
         $supportedProtocols = ["http", "https", "udp"];
         if (in_array($this->protocol, $supportedProtocols) == false) {
@@ -86,7 +94,9 @@ class Connection
                 $this->warning("Failed to initialize cURL session");
                 return $response;
             }
-
+            if($this->username && $this->password){
+              curl_setopt($ch, CURLOPT_USERPWD, $this->username . ":" . $this->password);
+            }
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
             curl_setopt($ch, CURLOPT_POSTFIELDS, $msg);
             if ($this->protocol == "https") {
