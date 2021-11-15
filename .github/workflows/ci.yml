@@ -1,0 +1,36 @@
+name: CI
+on: [push]
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php_version: [7.3, 8.0]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: php-actions/composer@v5
+      - uses: php-actions/phpunit@v3
+        with:
+          configuration: phpunit.xml.dist
+          php_version: ${{ matrix.php_version }}
+
+  phpstan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: php-actions/composer@v5
+      - name: phpstan
+        uses: php-actions/phpstan@v3
+        with:
+          configuration: phpstan.neon
+          php_version: 8.0
+
+  psalm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: phpstan
+        uses: docker://vimeo/psalm-github-actions
+        with:
+          composer_require_dev: true
+          php_version: 8.0

@@ -4,7 +4,11 @@ namespace pushprom;
 
 class Summary extends Metric
 {
-    function observe($value)
+    /**
+     * @param mixed $value
+     * @return bool|string|null
+     */
+    public function observe($value)
     {
         return $this->pushDelta(
             [

@@ -1,24 +1,20 @@
 <?php
 
-require __DIR__ . DIRECTORY_SEPARATOR . 'Connection.php';
-require __DIR__ . DIRECTORY_SEPARATOR . 'Metric.php';
-require __DIR__ . DIRECTORY_SEPARATOR . 'Gauge.php';
-require __DIR__ . DIRECTORY_SEPARATOR . 'Counter.php';
-require __DIR__ . DIRECTORY_SEPARATOR . 'Histogram.php';
-require __DIR__ . DIRECTORY_SEPARATOR . 'Summary.php';
+use PHPUnit\Framework\TestCase;
 
 class ConnectionStub extends stdClass
 {
-    function push($delta)
+    /** @param mixed $delta */
+    public function push($delta): void
     {
         $this->recordedDelta = $delta;
     }
 }
 
 
-class MetricTest extends \PHPUnit_Framework_TestCase
+class MetricTest extends TestCase
 {
-    public function testProxy()
+    public function testProxy(): void
     {
         $stub = new ConnectionStub();
 
@@ -37,18 +33,19 @@ class MetricTest extends \PHPUnit_Framework_TestCase
             $help   = "help_$i";
             $labels = ["key_$i" => "value_$i"];
 
-            $klass     = ucfirst($type);
-            $fullKlass = "pushprom\\$klass";
-            $rc        = new ReflectionClass($fullKlass);
-            $mo        = $rc->newInstanceArgs([$stub, "name_$i", "help_$i", ["key_$i" => "value_$i"]]);
+            $class     = ucfirst($type);
+            /** @var class-string $fullClass */
+            $fullClass = "pushprom\\$class";
+            $rc        = new ReflectionClass($fullClass);
+            $metric    = $rc->newInstanceArgs([$stub, "name_$i", "help_$i", ["key_$i" => "value_$i"]]);
 
             $j = 1;
             foreach ($methods as $method) {
                 $value = $i * $j * 7.3;
                 if (in_array($method, $valuelessMethods)) {
-                    $mo->$method();
+                    $metric->$method();
                 } else {
-                    $mo->$method($value);
+                    $metric->$method($value);
                 }
 
                 $expected = [
@@ -58,16 +55,17 @@ class MetricTest extends \PHPUnit_Framework_TestCase
                     'labels' => $labels,
                     'method' => $method,
                 ];
-                if (in_array($method, $valuelessMethods) == false) {
+                if (in_array($method, $valuelessMethods) === false) {
                     $expected['value'] = $value;
                 }
+                if ($type === 'histogram') {
+                    $expected['buckets'] = [];
+                }
 
-                $this->assertEquals($stub->recordedDelta, $expected);
+                $this->assertEquals($expected, $stub->recordedDelta);
             }
 
             $i++;
         }
     }
 }
-
-?>

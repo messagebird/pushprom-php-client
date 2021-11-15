@@ -2,15 +2,31 @@
 
 namespace pushprom;
 
-class Metric
+abstract class Metric
 {
+    /** @var mixed|\pushprom\Connection */
     protected $connection;
+
+    /** @var string */
     protected $name;
+
+    /** @var string */
     protected $help;
+
+    /** @var array */
     protected $labels;
+
+    /** @var bool */
     protected $useUDP;
 
-    function __construct($connection, $name, $help, $labels = [])
+    /**
+     * @param mixed|\pushprom\Connection $connection
+     * @param string $name
+     * @param string $help
+     * @param array $labels
+     * @throws \Exception
+     */
+    public function __construct($connection, string $name, string $help, array $labels = [])
     {
         $this->connection = $connection;
         $this->name       = $name;
@@ -33,7 +49,8 @@ class Metric
         }
     }
 
-    function pushDelta($attrs = [])
+    /** @return bool|string|null */
+    public function pushDelta(array $attrs = [])
     {
         // create new delta based on this metric
         $typeParts = explode('\\', strtolower(get_class($this)));
@@ -53,9 +70,8 @@ class Metric
         }
 
         if (sizeof($delta["labels"]) > 0) {
-            // ensure all label values are "strings"
             foreach ($delta["labels"] as $k => $v) {
-                $delta["labels"][$k] = "" . $v;
+                $delta["labels"][$k] = (string) $v;
             }
         }
 
